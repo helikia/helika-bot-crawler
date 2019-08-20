@@ -1,0 +1,26 @@
+{
+  "name": "helikia-bot-crawler",
+  "version": "1.0.0",
+  "description": "A bot crawler to get ephad information",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "prod": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helikia/helikia-bot-crawler.git"
+  },
+  "author": "matthieu.jacques.dev@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/helikia/helikia-bot-crawler/issues"
+  },
+  "homepage": "https://github.com/helikia/helikia-bot-crawler#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "jsonframe-cheerio": "^3.0.1",
+    "nodemon": "^1.19.1"
+  }
+}
