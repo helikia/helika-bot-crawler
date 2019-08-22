@@ -1,11 +1,13 @@
 {
   "name": "helikia-bot-crawler",
   "version": "1.0.0",
-  "description": "A bot crawler to get ephad information",
+  "description": "A bot crawler to get ephad informations",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon app.js",bea
-    "prod": "node app.js"
+    "dev": "nodemon app.js",
+    "prod": "node app.js",
+    "botDepartments:dev": "cd ./modules/botDepartments/ && nodemon botDepartments.js",
+    "botDepartments:prod": "cd ./modules/botDepartments/ && node botDepartments.js"
   },
   "repository": {
     "type": "git",
