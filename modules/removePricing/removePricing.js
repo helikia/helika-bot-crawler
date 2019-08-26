@@ -1,6 +1,6 @@
 const data = require('../../dist/db/db.json');
 const fs = require('fs');
-let toto;
+
 for ( var i in data ) {
     for ( var k in data[i] ) {
         // console.log(data[i][k].categories, '....................................................'); 
@@ -9,8 +9,8 @@ for ( var i in data ) {
     }
 }
 
-toto = JSON.stringify(data);
+let dbJson = JSON.stringify(data);
 
-fs.writeFile('../../dist/db/good.json', toto, function(err, result) {
+fs.writeFile('../../dist/db/db.json', dbJson, function(err, result) {
     if(err) console.log('error', err);
 });

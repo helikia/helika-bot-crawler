@@ -7,8 +7,8 @@
     "botDepartments:dev": "cd ./modules/botDepartments/ && nodemon botDepartments.js",
     "botDepartments:prod": "cd ./modules/botDepartments/ && node botDepartments.js",
     "mergeAllJson:dev": "cd ./modules/mergeAllJson/ && nodemon mergeJson.js",
-    "removePricing:dev": "cd ./modules/removePricing/ && nodemon removePricing.js",
-    "mergeAllJson:prod": "cd ./modules/mergeAllJson/ && node mergeJson.js"
+    "mergeAllJson:prod": "cd ./modules/mergeAllJson/ && node mergeJson.js",
+    "removePricing": "cd ./modules/removePricing/ && nodemon removePricing.js"
   },
   "repository": {
     "type": "git",
