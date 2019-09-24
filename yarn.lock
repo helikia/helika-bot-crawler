@@ -13,8 +13,8 @@ abbrev@1:
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
 addressit@^1.4.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/addressit/-/addressit-1.7.0.tgz#7fe3cf0d75fc25c5e69035c80277b2c8092e7fde"
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/addressit/-/addressit-1.17.3.tgz#7fe3cf0d75fc25c5e69035c80277b2c8092e7fde"
   integrity sha512-tbyGHuOqxlLy7AWYM9UAraELb6Zguk96gYtltC7+TlhcYRykPLIA0otB9OFosFEft+Qei+PPLPLey1k1LZ+rHA==
   dependencies:
     cog "^1.0.0"
@@ -519,8 +519,8 @@ domutils@1.5.1:
     domelementtype "1"
 
 domutils@^1.5.1:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.7.0.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
+  version "1.17.3"
+  resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.17.3.tgz#56ea341e834e06e6748af7a1cb25da67ea9f8c2a"
   integrity sha512-Lgd2XcJ/NjEw+7tFvfKxOzCYKZsdct5lczQ2ZaQY8Djz7pfAD3Gbp8ySJWtreII/vDlMVmxwa6pHmdxIYgttDg==
   dependencies:
     dom-serializer "0"

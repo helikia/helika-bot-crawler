@@ -4,6 +4,9 @@
   "description": "A bot crawler to get ephad informations",
   "main": "app.js",
   "scripts": {
+    "puppeteer:dev": "cd ./modules/puppeteer/ && nodemon puppeteer.js",
+    "extractcp:dev": "cd ./modules/extractcp/ && nodemon extractcp.js",
+    "getMoreInfo:dev": "cd ./modules/getMoreInfo/ && nodemon getMoreInfo.js",
     "botDepartments:dev": "cd ./modules/botDepartments/ && nodemon botDepartments.js",
     "botDepartments:prod": "cd ./modules/botDepartments/ && node botDepartments.js",
     "mergeAllJson:dev": "cd ./modules/mergeAllJson/ && nodemon mergeJson.js",
@@ -27,6 +30,7 @@
     "mongoose": "^5.6.11",
     "node-mongodb-fixtures": "^3.0.8",
     "nodemon": "^1.19.1",
+    "puppeteer": "^1.20.0",
     "require-all": "^3.0.0"
   }
 }
