@@ -6,14 +6,14 @@ var ehpad = [];
 (async () => {
 
   const browser = await puppeteer.launch({
-    headless: true
+    headless: false
   });
   const page = await browser.newPage()
   await page.tracing.start({
     path: 'trace.json',
     categories: ['devtools.timeline']
   })
-  for (let i = 1; i <= 95; i++) {
+  for (let i = 1; i <= 2; i++) {
     let zipcode;
 
     if (i < 10) {
@@ -24,7 +24,9 @@ var ehpad = [];
 
     for (let j = 1; j <= 10; j++) {
       
-      await new Promise(async function (resolve, reject) {
+     
+        
+      
         await page.goto(`${route}${zipcode}/0?page=${j}`);
         console.log(` ------- ${route}${zipcode}/0?page=${j} ------- `)
   
@@ -35,7 +37,7 @@ var ehpad = [];
         href = await page.$eval('a.cnsa_results-infoscol', a => a.getAttribute('href'));
 
 
-        try {
+        try {          
           await page.goto(`https://www.pour-les-personnes-agees.gouv.fr${href}`, {
             waitUntil: 'networkidle2',
             timeout: 3000000
@@ -45,6 +47,9 @@ var ehpad = [];
           await page.waitForSelector('div.cnsa_search_item-statut2');
           await page.waitForSelector('div.cnsa_search_item-courriel');
           await page.waitForSelector('#cnsa_search_compare-prices-contents');
+        } catch (error) {
+          console.log(error)
+        }
 
 
           const stories = await page.evaluate(() => {
@@ -83,12 +88,7 @@ var ehpad = [];
           })
           ehpad.push(stories);
           console.log('*****************************************', ehpad, '*****************************************');
-        } catch (err) {
-          console.log(err);
-        }
-
-      });
-
+   
     }
   }
 
