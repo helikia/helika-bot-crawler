@@ -4,9 +4,9 @@ const route = 'https://www.pour-les-personnes-agees.gouv.fr/annuaire-ehpad-en-he
 let href;
 var ehpad = [];
 (async () => {
-  const browser = await puppeteer.launch({ 
-    headless: true,
-    // devtools: true
+
+  const browser = await puppeteer.launch({
+    headless: true
   });
   const page = await browser.newPage()
   await page.tracing.start({
@@ -17,83 +17,88 @@ var ehpad = [];
     let zipcode;
 
     if (i < 10) {
-        zipcode = '0' + i;
+      zipcode = '0' + i;
     } else {
-        zipcode = i;
+      zipcode = i;
     }
-
-
-    
 
     for (let j = 1; j <= 10; j++) {
-      await page.goto(`${route}${zipcode}/0?page=${j}`);
       
-      try {
-        await page.waitForSelector('a.cnsa_results-infoscol', { timeout: 5000 });
-        
-        href = await page.$eval('a.cnsa_results-infoscol', a => a.getAttribute('href'));
-        
-        await page.goto(`https://www.pour-les-personnes-agees.gouv.fr${href}`, {
-          waitUntil: 'networkidle2',
-          timeout: 3000000
+      await new Promise(async function (resolve, reject) {
+        await page.goto(`${route}${zipcode}/0?page=${j}`);
+        console.log(` ------- ${route}${zipcode}/0?page=${j} ------- `)
+  
+        await page.waitForSelector('a.cnsa_results-infoscol', {
+          timeout: 5000
         });
+  
+        href = await page.$eval('a.cnsa_results-infoscol', a => a.getAttribute('href'));
 
-      } catch(error) {
-        console.log('is not exist');
-      }
-      
-      await page.waitForSelector('div.cnsa_search_item-statut'); 
-      await page.waitForSelector('div.cnsa_search_item-statut2');
-      await page.waitForSelector('div.cnsa_search_item-courriel');
-      await page.waitForSelector('#cnsa_search_compare-prices-contents');
 
-      
-      const stories = await page.evaluate(() => {  
-        let administrator = document.querySelector('div.cnsa_search_item-statut').innerText; 
-        let status = document.querySelector('div.cnsa_search_item-statut2').innerText;
-        let mail = document.querySelector('div.cnsa_search_item-courriel').innerText;
-        let capacity = document.querySelectorAll('.fiche-box')[1].innerText;
-        let accommodationType = document.querySelectorAll('.fiche-box')[2].innerText;
-        let socialHelp = document.querySelectorAll('.fiche-box')[3].innerText;
+        try {
+          await page.goto(`https://www.pour-les-personnes-agees.gouv.fr${href}`, {
+            waitUntil: 'networkidle2',
+            timeout: 3000000
+          });
 
-        let singleRoom = document.querySelectorAll('#cnsa_search_compare-prices-contents .box-content .table-striped strong')[0].innerText;
-        let doubleRoom = document.querySelectorAll('#cnsa_search_compare-prices-contents .box-content .table-striped strong')[1].innerText;
+          await page.waitForSelector('div.cnsa_search_item-statut');
+          await page.waitForSelector('div.cnsa_search_item-statut2');
+          await page.waitForSelector('div.cnsa_search_item-courriel');
+          await page.waitForSelector('#cnsa_search_compare-prices-contents');
 
-        let GIR = document.querySelectorAll('#cnsa_search_compare-prices-contents .box-content .table-striped')[2];
-        let GIR1_2 = GIR.querySelectorAll('tr')[0].innerText;
-        let GIR3_4 = GIR.querySelectorAll('tr')[1].innerText;
-        let GIR5_6 = GIR.querySelectorAll('tr')[2].innerText;
 
-      
-        establishement = {
-          administrator: administrator,
-          status: status,
-          mail: mail,
-          capacity: capacity,
-          accommodationType: accommodationType,
-          socialHelp: socialHelp,
-          pricing: [{
-            singleRoom: singleRoom,
-            doubleRoom: doubleRoom,
-            GIR1_2: GIR1_2,
-            GIR3_4: GIR3_4,
-            GIR5_6: GIR5_6
-          }]
+          const stories = await page.evaluate(() => {
+            let administrator = document.querySelector('div.cnsa_search_item-statut').innerText;
+            let status = document.querySelector('div.cnsa_search_item-statut2').innerText;
+            let mail = document.querySelector('div.cnsa_search_item-courriel').innerText;
+            let capacity = document.querySelectorAll('.fiche-box')[1].innerText;
+            let accommodationType = document.querySelectorAll('.fiche-box')[2].innerText;
+            let socialHelp = document.querySelectorAll('.fiche-box')[3].innerText;
+
+            let singleRoom = document.querySelectorAll('#cnsa_search_compare-prices-contents .box-content .table-striped strong')[0].innerText;
+            let doubleRoom = document.querySelectorAll('#cnsa_search_compare-prices-contents .box-content .table-striped strong')[1].innerText;
+
+            let GIR = document.querySelectorAll('#cnsa_search_compare-prices-contents .box-content .table-striped')[2];
+            let GIR1_2 = GIR.querySelectorAll('tr')[0].innerText;
+            let GIR3_4 = GIR.querySelectorAll('tr')[1].innerText;
+            let GIR5_6 = GIR.querySelectorAll('tr')[2].innerText;
+
+
+            establishement = {
+              administrator: administrator,
+              status: status,
+              mail: mail,
+              capacity: capacity,
+              accommodationType: accommodationType,
+              socialHelp: socialHelp,
+              pricing: [{
+                singleRoom: singleRoom,
+                doubleRoom: doubleRoom,
+                GIR1_2: GIR1_2,
+                GIR3_4: GIR3_4,
+                GIR5_6: GIR5_6
+              }]
+            }
+            return establishement;
+          })
+          ehpad.push(stories);
+          console.log('*****************************************', ehpad, '*****************************************');
+        } catch (err) {
+          console.log(err);
         }
-        return establishement;
-      })    
-      ehpad.push(stories);
-      console.log('*****************************************', ehpad, '*****************************************');
+
+      });
+
     }
   }
-  
-    // fs.writeFile(`./ehpad.json`, JSON.stringify(ehpad), (err) => {
-    //     if (err) {
-    //         return console.log(err);
-    //     } else {
-    //         console.log("Le fichier est sauvegardé ! #OKLM");
-    //     }
-    // });
+
+  fs.writeFile(`./ehpad.json`, JSON.stringify(stories), (err) => {
+    if (err) {
+      return console.log(err);
+    } else {
+      console.log("Le fichier est sauvegardé ! #OKLM");
+    }
+  });
 
   await page.tracing.stop();
 })()
